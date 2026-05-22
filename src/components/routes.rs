@@ -1,12 +1,12 @@
-use dioxus::prelude::*;
 use super::header::Header;
+use super::page_cal::Cal;
+use super::page_code::Code;
+use super::page_gaim::Lab;
+use super::page_info::Info;
 use super::page_main::Home;
 use super::page_pub::Pub;
-use super::page_code::Code;
-use super::page_info::Info;
-use super::page_gaim::Lab;
-use super::page_cal::Cal;
 use super::page_res::Resources;
+use dioxus::prelude::*;
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -30,6 +30,14 @@ pub fn Director(pagename: String) -> Element {
         "gaim" => rsx!(Lab {}),
         "res" => rsx!(Resources {}),
         "meet" => rsx!(Cal {}),
+        "AnalogEnsemble" => {
+            use_effect(|| {
+                let _ = document::eval(
+                    "window.location.replace('https://uga-gaim.github.io/AnalogEnsemble/')",
+                );
+            });
+            rsx! { "Redirecting..." }
+        }
         _ => rsx!(Home {}),
     }
 }
