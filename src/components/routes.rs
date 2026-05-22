@@ -30,14 +30,6 @@ pub fn Director(pagename: String) -> Element {
         "gaim" => rsx!(Lab {}),
         "res" => rsx!(Resources {}),
         "meet" => rsx!(Cal {}),
-        "AnalogEnsemble" => {
-            use_effect(|| {
-                let _ = document::eval(
-                    "window.location.replace('https://uga-gaim.github.io/AnalogEnsemble/')",
-                );
-            });
-            rsx! { "Redirecting..." }
-        }
         _ => rsx!(Home {}),
     }
 }
