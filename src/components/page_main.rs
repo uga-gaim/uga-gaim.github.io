@@ -1,16 +1,15 @@
-use dioxus::prelude::*;
 use super::css_preset::*;
 use super::routes::Route;
+use dioxus::prelude::*;
 
 const SELFIE_IMG: Asset = asset!("/assets/imgs/selfie.png");
 
 #[component]
 pub fn Home() -> Element {
-
     rsx! {
         div {
             class: CSS_CONTENT_CONTAINER,
-                
+
                 div {
                     class: CSS_CONTENT_CARD,
 
@@ -28,7 +27,7 @@ pub fn Home() -> Element {
 
                     div {
                         class: "flex flex-col lg:flex-row gap-8",
-                        
+
                         div {
                             class: "lg:w-1/3 flex flex-col items-center justify-center space-y-6 max-w-[25rem] mx-auto",
                             img {
@@ -49,7 +48,7 @@ pub fn Home() -> Element {
 
                         div {
                             class: "flex-1 space-y-4 w-full",
-                            
+
                             p {
                                 class: "text-lg text-gray-800",
                                 "Salute and welcome!"
@@ -60,15 +59,15 @@ pub fn Home() -> Element {
                                 "I am an "
                                 span { class: "font-semibold", "Assistant Professor" }
                                 " in the "
-                                a { 
-                                    href: "https://geography.uga.edu/directory/people/weiming-hu", 
+                                a {
+                                    href: "https://geography.uga.edu/directory/people/weiming-hu",
                                     target: "_blank",
                                     class: "text-red-600 hover:text-red-800 underline",
                                     "Dept. of Geography, Univ. of Georgia"
                                 }
                                 " and a core faculty member of the "
-                                a { 
-                                    href: "https://cgr.uga.edu/bio-weiminghu.html", 
+                                a {
+                                    href: "https://cgr.uga.edu/bio-weiminghu.html",
                                     target: "_blank",
                                     class: "text-red-600 hover:text-red-800 underline",
                                     "Center for Geospatial Research"
@@ -116,11 +115,11 @@ pub fn Home() -> Element {
                                 span { class: "font-bold text-red-700", "weather" }
                                 ", or "
                                 span { class: "font-bold text-red-700", "climate science" }
-                                ". Please contact me if you are interested in joining the " 
-                                Link { 
+                                ". Please contact me if you are interested in joining the "
+                                Link {
                                     to: Route::Director { pagename: "gaim".to_string() },
                                     class: "text-red-700 hover:text-red-900 font-normal",
-                                    "Lab for GAIM" 
+                                    "Lab for GAIM"
                                 }
                                 "."
                             }
@@ -180,7 +179,7 @@ pub fn Home() -> Element {
                             i { class: "fa-solid fa-address-card" }
                         }
                         a {
-                            href: "https://github.com/Weiming-Hu",
+                            href: "https://github.com/uga-gaim",
                             target: "_blank",
                             class: "text-gray-600 hover:text-red-600 transition-colors text-3xl",
                             title: "GitHub",
