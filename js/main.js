@@ -228,27 +228,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }).join('');
     }
 
-    // Photos come from the sheet's "Photo" column. Google Drive throttles hotlinked
-    // images (they load unreliably), so we serve a locally cached copy
-    // (assets/people/cache/<id>.jpg, produced by scripts/sync_people_photos.sh) and only
-    // fall back to the live Drive URL — then an initials avatar — if the cache is missing.
-    function driveFileId(url) {
-        const m = url.match(/\/file\/d\/([^/]+)/)
-            || url.match(/[?&]id=([^&]+)/)
-            || url.match(/thumbnail\?id=([^&]+)/);
-        return m ? m[1] : '';
-    }
+    const PERSON_PHOTOS = {
+        'Anna Long': 'assets/people/anna.jpg',
+        'Harshith Kethavath': 'assets/people/harshith.jpeg',
+        'Venkata Vivek Panguluri': 'assets/people/vivek.jpeg',
+        'Yonghun Suh': 'assets/people/yonghun.jpeg',
+        'Mensah Emmanuel': 'assets/people/mensah.jpeg'
+    };
 
     function personPhotoHtml(person, name, initials) {
-        const raw = (person.Photo || '').trim();
-        if (!raw) {
+        const photo = (person.Photo || '').trim();
+        // A bare filename in the Photo column wins; otherwise use the mapped local file.
+        const src = (photo && !/[:/]/.test(photo)) ? `assets/people/${photo}` : (PERSON_PHOTOS[name] || '');
+        if (!src) {
             return `<div class="person-photo"><span class="avatar-initials">${escapeHtml(initials)}</span></div>`;
         }
-        const id = /drive\.google\.com|docs\.google\.com/.test(raw) ? driveFileId(raw) : '';
-        const primary = id ? `assets/people/cache/${id}.jpg` : raw;
-        const fallback = id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1000` : '';
-        const fbAttr = fallback ? ` data-fallback="${escapeHtml(fallback)}"` : '';
-        return `<div class="person-photo"><img src="${escapeHtml(primary)}" alt="${escapeHtml(name)}" data-initials="${escapeHtml(initials)}"${fbAttr}></div>`;
+        return `<div class="person-photo"><img src="${escapeHtml(src)}" alt="${escapeHtml(name)}" data-initials="${escapeHtml(initials)}"></div>`;
     }
 
     const currentGrid = document.getElementById('current-members');
@@ -319,22 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
     }
 
-    // If the cached photo is missing, try the live Drive URL once, then fall back to
-    // an initials avatar.
+    // Swap a missing photo for an initials avatar.
     function attachPhotoFallback(container) {
         container.querySelectorAll('img[data-initials]').forEach(img => {
             img.addEventListener('error', () => {
-                const fb = img.getAttribute('data-fallback');
-                if (fb) {
-                    img.removeAttribute('data-fallback');
-                    img.src = fb;
-                } else {
-                    const span = document.createElement('span');
-                    span.className = 'avatar-initials';
-                    span.textContent = img.dataset.initials;
-                    img.replaceWith(span);
-                }
-            });
+                const span = document.createElement('span');
+                span.className = 'avatar-initials';
+                span.textContent = img.dataset.initials;
+                img.replaceWith(span);
+            }, { once: true });
         });
     }
 
