@@ -91,9 +91,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const SHEETS = {
-        news: 'https://docs.google.com/spreadsheets/d/12GVUUhUJlwA-tBf-BCF5Z3E5arNk3GDi2NEbbZPhl-Y/gviz/tq?tqx=out:csv',
-        publications: 'https://docs.google.com/spreadsheets/d/1ZAakjwIZFbH49mTcjOnjTUxF3zfSPqobH99VUCksO1s/gviz/tq?tqx=out:csv',
-        people: 'https://docs.google.com/spreadsheets/d/18qyd5031XPflj8yAxMd0R3CJAkj8tQMtb8-9AS-1tzs/gviz/tq?tqx=out:csv'
+        news: 'https://docs.google.com/spreadsheets/d/1dXi4Xsls_baLten9Shn2kwF-SZ7QOpb6/gviz/tq?tqx=out:csv',
+        publications: 'https://docs.google.com/spreadsheets/d/1C3FFrE_CRWiliexxafu7ci_78_XDcN_z/gviz/tq?tqx=out:csv',
+        people: 'https://docs.google.com/spreadsheets/d/1VODQFrsWPv_qFuYQryK44ix0a-89mtBe/gviz/tq?tqx=out:csv'
     };
 
     function parseCSV(text) {
@@ -203,37 +203,47 @@ document.addEventListener('DOMContentLoaded', () => {
             container.innerHTML = '<p class="loading-text">No publications yet.</p>';
             return;
         }
-        container.innerHTML = items.map(item => {
-            const links = [
-                { url: safeUrl(item.Paper), label: 'View Paper' },
-                { url: safeUrl(item.Code), label: 'Code' },
-                { url: safeUrl(item.Blog), label: 'Blog' }
-            ]
-                .filter(link => link.url)
-                .map(link => `<a href="${link.url}" class="btn btn-outline btn-small" target="_blank" rel="noopener">${link.label}</a>`)
-                .join('');
-            const authors = item.Authors
-                ? `<p class="pub-authors"><strong>Authors:</strong> ${escapeHtml(item.Authors)}</p>`
-                : '';
-            const venue = item.Venue
-                ? `<p class="pub-venue"><em>${escapeHtml(item.Venue)}</em></p>`
-                : '';
-            return `
+        const grouped = {};
+        items.forEach(item => {
+            const year = item.Year || 'Other';
+            if (!grouped[year]) grouped[year] = [];
+            grouped[year].push(item);
+        });
+        const sortedYears = Object.keys(grouped).sort((a, b) => b - a);
+        container.innerHTML = sortedYears.map(year => {
+            const pubs = grouped[year].map(item => {
+                const links = [
+                    { url: safeUrl(item.Paper), label: 'View Paper' },
+                    { url: safeUrl(item.Code), label: 'Code' },
+                    { url: safeUrl(item.Blog), label: 'Blog' }
+                ]
+                    .filter(link => link.url)
+                    .map(link => `<a href="${link.url}" class="btn btn-outline btn-small" target="_blank" rel="noopener">${link.label}</a>`)
+                    .join('');
+                const authors = item.Authors
+                    ? `<p class="pub-authors"><strong>Authors:</strong> ${escapeHtml(item.Authors)}</p>`
+                    : '';
+                const venue = item.Venue
+                    ? `<p class="pub-venue"><em>${escapeHtml(item.Venue)}</em></p>`
+                    : '';
+                return `
                 <div class="pub-item">
                     <h3 class="pub-title">${escapeHtml(item.Title)}</h3>
                     ${authors}
                     ${venue}
                     ${links ? `<div class="pub-links">${links}</div>` : ''}
                 </div>`;
+            }).join('');
+            return `<div class="pub-year-group">
+                <div class="pub-year-divider"><span>${escapeHtml(year)}</span></div>
+                ${pubs}
+            </div>`;
         }).join('');
     }
 
     const PERSON_PHOTOS = {
-        'Anna Long': 'assets/people/anna.jpg',
-        'Harshith Kethavath': 'assets/people/harshith.jpeg',
-        'Venkata Vivek Panguluri': 'assets/people/vivek.jpeg',
-        'Yonghun Suh': 'assets/people/yonghun.jpeg',
-        'Mensah Emmanuel': 'assets/people/mensah.jpeg'
+        'Anna Long': 'assets/people/Long.jpg',
+        'Harshith Kethavath': 'assets/people/Kethavath.jpeg',
     };
 
     function personPhotoHtml(person, name, initials) {
@@ -259,7 +269,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function personInitials(name) {
-        return name.split(/\s+/).filter(Boolean).map(w => w[0]).slice(0, 2).join('').toUpperCase();
+        const words = name.split(/\s+/).filter(Boolean);
+        if (words.length <= 2) return words.map(w => w[0]).join('').toUpperCase();
+        return (words[0][0] + words[words.length - 1][0]).toUpperCase();
     }
 
     function personCard(person) {

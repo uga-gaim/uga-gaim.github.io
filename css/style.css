@@ -433,9 +433,9 @@ section:not(.hero) {
 }
 
 .partner-tile img {
-    height: clamp(130px, 14vw, 200px);
+    height: clamp(80px, 14vw, 150px);
     width: auto;
-    max-width: 100%;
+    /* max-width: 100%; */
     object-fit: contain;
     display: block;
 }
@@ -941,12 +941,8 @@ a.past-member-name:hover {
 
 .pub-item {
     padding: 2rem 0;
-    border-bottom: 1px solid var(--border-color);
 }
 
-.pub-item:first-child {
-    border-top: 1px solid var(--border-color);
-}
 
 .pub-title {
     margin-bottom: 0.75rem;
@@ -961,6 +957,31 @@ a.past-member-name:hover {
 .pub-venue {
     font-size: 1rem;
     color: var(--text-secondary);
+}
+
+.pub-year-group {
+    margin-bottom: 2.5rem;
+}
+
+.pub-year-divider {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.pub-year-divider span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.pub-year-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    border-top: 1px solid var(--border-color);
 }
 
 .pub-links {
@@ -1091,6 +1112,7 @@ a.past-member-name:hover {
 
 .gallery-single-slot {
     width: 100%;
+    max-width: 700px;
     display: block;
     border-radius: var(--border-radius-xl);
 }
