@@ -127,7 +127,6 @@ p {
     text-decoration: underline;
 }
 
-/* --- Navbar --- */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -202,7 +201,6 @@ p {
     font-weight: 700;
 }
 
-/* --- Hamburger menu --- */
 .nav-hamburger {
     display: none;
     flex-direction: column;
@@ -258,14 +256,12 @@ p {
     color: var(--text-primary);
 }
 
-/* --- Hero Section --- */
 .hero {
     padding: 2rem;
     max-width: 1600px;
     margin: 0 auto;
 }
 
-/* Split hero: 60/40 */
 .hero-split {
     display: flex;
     gap: 0.75rem;
@@ -274,7 +270,6 @@ p {
     overflow: hidden;
 }
 
-/* Left panel — earth image with text */
 .hero-left {
     flex: 3;
     position: relative;
@@ -305,7 +300,6 @@ p {
     color: rgba(255, 255, 255, 0.85);
 }
 
-/* Right panel — stacked research cards */
 .hero-right {
     flex: 2;
     display: flex;
@@ -365,7 +359,184 @@ p {
     line-height: 1.4;
 }
 
-/* --- Shared Section Styles --- */
+.hero-1a {
+    padding: 3rem 2rem;
+}
+
+.hero-1a-grid {
+    display: grid;
+    grid-template-columns: 6.25fr 5.75fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.hero-1a-copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.hero-eyebrow {
+    display: inline-flex;
+    padding: 6px 14px;
+    border-radius: var(--border-radius-pill);
+    background: rgba(186, 12, 47, 0.08);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+.hero-1a h1 {
+    font-size: 4.4rem;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.hero-lede {
+    max-width: 34em;
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+}
+
+.hero-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.hero-media {
+    position: relative;
+    height: 560px;
+    border-radius: var(--border-radius-xl);
+    overflow: hidden;
+    background: var(--card-bg);
+}
+
+.hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.hero-slides {
+    display: flex;
+    height: 100%;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+}
+
+.hero-slide {
+    position: relative;
+    flex: 0 0 100%;
+    height: 100%;
+}
+
+.hero-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+.hero-media-caption {
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(4px);
+    border-radius: var(--border-radius-pill);
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.research-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin-top: 3rem;
+}
+
+.research-card {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    padding: 1.25rem 1.5rem;
+    background: var(--card-bg);
+    border-radius: var(--border-radius-lg);
+    text-decoration: none;
+    transition: background 0.2s ease;
+}
+
+.research-card:hover {
+    background: #f1f3f4;
+}
+
+.research-card p {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.research-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    overflow: hidden;
+    flex: none;
+}
+
+.research-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.research-arrow {
+    color: var(--accent);
+    font-weight: 600;
+    margin-left: auto;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 1024px) {
+    .hero-1a-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+    }
+
+    .hero-media {
+        height: 420px;
+    }
+
+    .hero-1a h1 {
+        font-size: 3.2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-1a {
+        padding: 2rem 1rem;
+    }
+
+    .hero-1a h1 {
+        font-size: 2.6rem;
+    }
+
+    .research-row {
+        grid-template-columns: 1fr;
+    }
+}
+
 section:not(.hero) {
     padding: 6rem 2rem;
     max-width: 1400px;
@@ -379,7 +550,6 @@ section:not(.hero) {
     align-items: flex-end;
 }
 
-/* --- Sponsors & Collaborators --- */
 .partners-layout {
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -435,7 +605,6 @@ section:not(.hero) {
 .partner-tile img {
     height: clamp(80px, 14vw, 150px);
     width: auto;
-    /* max-width: 100%; */
     object-fit: contain;
     display: block;
 }
@@ -468,26 +637,21 @@ section:not(.hero) {
     }
 }
 
-/* --- Updates Carousel --- */
 .carousel {
     width: 100%;
     overflow-x: auto;
     scrollbar-width: none;
-    /* Firefox */
     -ms-overflow-style: none;
-    /* IE and Edge */
 }
 
 .carousel::-webkit-scrollbar {
     display: none;
-    /* Chrome, Safari and Opera */
 }
 
 .carousel-track {
     display: flex;
     gap: 1.5rem;
     padding-bottom: 2rem;
-    /* space for scroll shadow */
 }
 
 .card-large {
@@ -507,7 +671,6 @@ section:not(.hero) {
     transition: transform 0.5s ease;
 }
 
-/* Placeholder backgrounds */
 .bg-geo {
     background: url('../assets/research/extreme.jpg') center/cover no-repeat;
 }
@@ -544,7 +707,6 @@ section:not(.hero) {
     align-self: flex-start;
 }
 
-/* --- Asymmetric Grid (News) --- */
 .asymmetric-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr;
@@ -602,7 +764,6 @@ section:not(.hero) {
     margin: 2rem 0;
 }
 
-/* --- Footer --- */
 .footer {
     background-color: var(--card-bg);
     padding: 6rem 2rem 2rem;
@@ -655,7 +816,6 @@ section:not(.hero) {
     font-size: 0.875rem;
 }
 
-/* --- People Page --- */
 .people-section {
     padding: 6rem 2rem;
     max-width: 1200px;
@@ -779,7 +939,6 @@ section:not(.hero) {
     letter-spacing: 0.03em;
 }
 
-/* Past members — simple linked list, no photos */
 .past-list {
     display: flex;
     flex-direction: column;
@@ -857,7 +1016,6 @@ a.past-member-name:hover {
     stroke: none;
 }
 
-/* --- News Page --- */
 .news-section {
     padding: 6rem 2rem;
     max-width: 1200px;
@@ -925,7 +1083,6 @@ a.past-member-name:hover {
     transform: translateX(5px);
 }
 
-/* --- Publications Page --- */
 .publications-section {
     padding: 6rem 2rem;
     max-width: 1200px;
@@ -1002,7 +1159,6 @@ a.past-member-name:hover {
     margin-top: 4rem;
 }
 
-/* --- Gallery Page --- */
 .gallery-section {
     padding: 6rem 2rem;
     max-width: 1200px;
@@ -1030,7 +1186,6 @@ a.past-member-name:hover {
     background: var(--border-color);
 }
 
-/* Outer canvas card */
 .gallery-canvas {
     display: flex;
     gap: 3px;
@@ -1049,7 +1204,6 @@ a.past-member-name:hover {
     padding: 3px;
 }
 
-/* Left block: wide image stacked above a row of 2 */
 .gallery-left {
     display: flex;
     flex-direction: column;
@@ -1063,7 +1217,6 @@ a.past-member-name:hover {
     gap: 3px;
 }
 
-/* Right block: 3 images stacked in a column */
 .gallery-right {
     display: flex;
     flex-direction: column;
@@ -1071,7 +1224,6 @@ a.past-member-name:hover {
     flex: 1;
 }
 
-/* Individual image slot */
 .gallery-slot {
     border-radius: 0;
     overflow: hidden;
@@ -1079,23 +1231,21 @@ a.past-member-name:hover {
     aspect-ratio: 4 / 3;
 }
 
-/* Wide top slot spans full left width */
 .gallery-slot-wide {
     aspect-ratio: 16 / 9;
-    border-radius: calc(var(--border-radius-xl) - 3px) 0 0 0; /* top-left corner */
+    border-radius: calc(var(--border-radius-xl) - 3px) 0 0 0;
 }
 
-/* Corner slots — inner radius matches outer card minus padding */
 .gallery-right .gallery-slot:first-child {
-    border-radius: 0 calc(var(--border-radius-xl) - 3px) 0 0; /* top-right */
+    border-radius: 0 calc(var(--border-radius-xl) - 3px) 0 0;
 }
 
 .gallery-2row .gallery-slot:first-child {
-    border-radius: 0 0 0 calc(var(--border-radius-xl) - 3px); /* bottom-left */
+    border-radius: 0 0 0 calc(var(--border-radius-xl) - 3px);
 }
 
 .gallery-right .gallery-slot:last-child {
-    border-radius: 0 0 calc(var(--border-radius-xl) - 3px) 0; /* bottom-right */
+    border-radius: 0 0 calc(var(--border-radius-xl) - 3px) 0;
 }
 
 .gallery-right .gallery-slot {
@@ -1132,7 +1282,6 @@ a.past-member-name:hover {
     }
 }
 
-/* --- Responsive --- */
 @media (max-width: 1024px) {
     .asymmetric-grid {
         grid-template-columns: 1fr;
@@ -1154,7 +1303,6 @@ a.past-member-name:hover {
         padding: 1.5rem;
     }
 
-    /* Navbar: hide links, show hamburger */
     .nav-center {
         display: none;
     }
@@ -1167,7 +1315,6 @@ a.past-member-name:hover {
         display: flex;
     }
 
-    /* Hero: stack panels vertically */
     .hero {
         padding: 1rem;
     }

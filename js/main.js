@@ -93,7 +93,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const SHEETS = {
         news: 'https://docs.google.com/spreadsheets/d/1dXi4Xsls_baLten9Shn2kwF-SZ7QOpb6/gviz/tq?tqx=out:csv',
         publications: 'https://docs.google.com/spreadsheets/d/1C3FFrE_CRWiliexxafu7ci_78_XDcN_z/gviz/tq?tqx=out:csv',
-        people: 'https://docs.google.com/spreadsheets/d/1VODQFrsWPv_qFuYQryK44ix0a-89mtBe/gviz/tq?tqx=out:csv'
+        people: 'https://docs.google.com/spreadsheets/d/1VODQFrsWPv_qFuYQryK44ix0a-89mtBe/gviz/tq?tqx=out:csv',
+        hero: 'https://docs.google.com/spreadsheets/d/1RJLU8RN-3P1sEOwwJVeJ-u-RRlJe3rzZAMDMccN_3HA/gviz/tq?tqx=out:csv'
     };
 
     function parseCSV(text) {
@@ -152,6 +153,82 @@ document.addEventListener('DOMContentLoaded', () => {
     function safeUrl(url) {
         const trimmed = (url || '').trim();
         return /^https?:\/\//i.test(trimmed) ? escapeHtml(trimmed) : '';
+    }
+
+    const HERO_SLIDE_MS = 4000;
+
+    const heroMedia = document.getElementById('hero-media');
+    if (heroMedia) {
+        fetchSheet(SHEETS.hero)
+            .then(rows => {
+                const slides = rows
+                    .map(r => ({ path: (r.Path || '').trim(), text: (r.Text || '').trim() }))
+                    .filter(s => s.path);
+                if (slides.length) renderHeroSlides(slides, heroMedia);
+            })
+            .catch(error => console.error('Error loading hero images:', error));
+    }
+
+    function renderHeroSlides(slides, container) {
+        const n = slides.length;
+        const slideHtml = s => `
+            <div class="hero-slide">
+                <img src="${escapeHtml(s.path)}" alt="${escapeHtml(s.text)}">
+                ${s.text ? `<span class="hero-media-caption">${escapeHtml(s.text)}</span>` : ''}
+            </div>`;
+
+        if (n === 1) {
+            container.innerHTML = `<div class="hero-slides">${slideHtml(slides[0])}</div>`;
+            return;
+        }
+
+        const seq = [slides[n - 1], ...slides, slides[0]];
+        container.innerHTML = `<div class="hero-slides">${seq.map(slideHtml).join('')}</div>`;
+
+        const track = container.querySelector('.hero-slides');
+        let pos = 1;
+        let animating = false;
+        let safety;
+
+        const setTransform = () => { track.style.transform = `translateX(-${pos * 100}%)`; };
+
+        const jumpTo = (p) => {
+            pos = p;
+            track.style.transition = 'none';
+            setTransform();
+            void track.offsetWidth;
+            track.style.transition = '';
+        };
+
+        jumpTo(1);
+
+        function unlock() {
+            animating = false;
+            if (pos === seq.length - 1) jumpTo(1);
+            else if (pos === 0) jumpTo(n);
+        }
+
+        const go = (dir) => {
+            if (animating) return;
+            animating = true;
+            pos += dir;
+            setTransform();
+            clearTimeout(safety);
+            safety = setTimeout(unlock, 1600);
+        };
+
+        track.addEventListener('transitionend', (event) => {
+            if (event.target !== track || event.propertyName !== 'transform') return;
+            clearTimeout(safety);
+            unlock();
+        });
+
+        let timer;
+        const autoplay = () => {
+            clearInterval(timer);
+            timer = setInterval(() => go(1), HERO_SLIDE_MS);
+        };
+        autoplay();
     }
 
     const newsList = document.getElementById('news-list');
@@ -248,7 +325,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function personPhotoHtml(person, name, initials) {
         const photo = (person.Photo || '').trim();
-        // A bare filename in the Photo column wins; otherwise use the mapped local file.
         const src = (photo && !/[:/]/.test(photo)) ? `assets/people/${photo}` : (PERSON_PHOTOS[name] || '');
         if (!src) {
             return `<div class="person-photo"><span class="avatar-initials">${escapeHtml(initials)}</span></div>`;
@@ -326,7 +402,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>`;
     }
 
-    // Swap a missing photo for an initials avatar.
     function attachPhotoFallback(container) {
         container.querySelectorAll('img[data-initials]').forEach(img => {
             img.addEventListener('error', () => {
