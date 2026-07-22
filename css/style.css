@@ -329,8 +329,15 @@ p {
 
 .hero-actions {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.75rem;
     margin-top: 0.5rem;
+}
+
+/* Shrinking a button sizes its box before the text wraps, leaving dead space
+   inside. Let the row wrap instead so each button keeps its content width. */
+.hero-actions .btn {
+    flex-shrink: 0;
 }
 
 .hero-media {
@@ -559,16 +566,22 @@ section:not(.hero) {
     justify-content: center;
 }
 
+/* Logos are bounded by a landscape box, not a square: the width cap is ~1.4x the
+   height cap, so a logo up to 1.4:1 still renders at full height. Only wider
+   marks get held back by width — which is what keeps them from dominating. */
 .partner-tile img {
-    height: clamp(80px, 14vw, 150px);
+    max-height: clamp(80px, 14vw, 120px);
+    max-width: clamp(150px, 31vw, 170px);
+    height: auto;
     width: auto;
     object-fit: contain;
     display: block;
 }
 
-/* Modifier for logos that read too large at the default size */
+/* Modifier for logos that still read too large at the default bounds */
 .partner-tile.partner-tile-sm img {
-    height: clamp(60px, 10vw, 105px);
+    max-height: clamp(60px, 10vw, 84px);
+    max-width: clamp(105px, 22vw, 119px);
 }
 
 @media (max-width: 768px) {
