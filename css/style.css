@@ -286,15 +286,21 @@ p {
 }
 
 .hero-eyebrow {
-    display: inline-flex;
+    /* Not inline-flex: that would collapse the spaces around the <b> initials */
+    display: inline-block;
     padding: 6px 14px;
     border-radius: var(--border-radius-pill);
     background: rgba(186, 12, 47, 0.08);
     color: var(--accent);
-    font-weight: 600;
-    font-size: var(--fs-xs);
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
+    font-weight: 400;
+    font-size: var(--fs-base);
+    letter-spacing: normal;
+}
+
+/* The letters that spell GAIM — carries the acronym without a separate gloss */
+.hero-eyebrow b {
+    font-weight: 700;
+    font-size: var(--fs-md);
 }
 
 .hero-1a h1 {
