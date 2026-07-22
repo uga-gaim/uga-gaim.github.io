@@ -161,6 +161,16 @@ p {
     }
 }
 
+/* Nav CTA in the theme red — the one action we most want visitors to take */
+.nav-right .btn-outline {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.nav-right .btn-outline:hover {
+    background-color: rgba(186, 12, 47, 0.08);
+}
+
 .nav-center {
     display: flex;
     gap: 2rem;
