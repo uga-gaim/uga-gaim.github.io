@@ -49,6 +49,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        const mascot = document.querySelector('.nav-mascot');
+        if (mascot && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            const wait = (min, max) => min + Math.random() * (max - min);
+            const cycle = () => {
+                const nowHidden = mascot.classList.toggle('is-hidden');
+                // Away briefly, back for longer — visible is the resting state.
+                setTimeout(cycle, nowHidden ? wait(2000, 5000) : wait(6000, 14000));
+            };
+            setTimeout(cycle, wait(4000, 9000));
+        }
+
         const hamburger = document.querySelector('.nav-hamburger');
         const mobileMenu = document.querySelector('.nav-mobile-menu');
         if (hamburger && mobileMenu) {
