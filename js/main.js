@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return /^https?:\/\//i.test(trimmed) ? escapeHtml(trimmed) : '';
     }
 
-    const HERO_SLIDE_MS = 9000;
+    const HERO_SLIDE_MS = 21000;
 
     const heroMedia = document.getElementById('hero-media');
     if (heroMedia) {

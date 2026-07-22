@@ -228,10 +228,13 @@ p {
     border-bottom: 1px solid var(--border-color);
 }
 
+/* CTA in the mobile menu: same shape as the other links, set in italic */
+.nav-mobile-menu a.nav-mobile-cta {
+    font-style: italic;
+}
+
 .nav-mobile-menu a:last-child {
     border-bottom: none;
-    margin-top: 0.75rem;
-    align-self: flex-start;
 }
 
 .nav-mobile-menu a:hover {
@@ -302,13 +305,6 @@ p {
     background: var(--card-bg);
 }
 
-.hero-media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
 .hero-slides {
     display: flex;
     height: 100%;
@@ -323,7 +319,7 @@ p {
 }
 
 /* Blurred, zoomed copy of the photo fills the letterbox bars */
-.hero-media img.hero-slide-bg {
+.hero-slide-bg {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -335,7 +331,7 @@ p {
 }
 
 /* The actual photo, never cropped */
-.hero-media img.hero-slide-img {
+.hero-slide-img {
     position: relative;
     width: 100%;
     height: 100%;
@@ -890,6 +886,23 @@ a.past-member-name:hover {
     font-size: var(--fs-base);
     color: var(--text-primary);
     line-height: 1.5;
+}
+
+/* Narrow screens: date + tag on one line, text stacked beneath at full width */
+@media (max-width: 768px) {
+    .news-item {
+        grid-template-columns: auto 1fr;
+        gap: 0.6rem 0.75rem;
+    }
+
+    /* Keeps the pill hugging its label instead of stretching across the 1fr column */
+    .news-tag {
+        justify-self: start;
+    }
+
+    .news-body {
+        grid-column: 1 / -1;
+    }
 }
 
 .news-read-more {
