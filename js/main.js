@@ -156,7 +156,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const n = slides.length;
         const slideHtml = s => `
             <div class="hero-slide">
-                <img src="${escapeHtml(s.path)}" alt="${escapeHtml(s.text)}">
+                <img class="hero-slide-bg" src="${escapeHtml(s.path)}" alt="" aria-hidden="true">
+                <img class="hero-slide-img" src="${escapeHtml(s.path)}" alt="${escapeHtml(s.text)}">
                 ${s.text ? `<span class="hero-media-caption">${escapeHtml(s.text)}</span>` : ''}
             </div>`;
 

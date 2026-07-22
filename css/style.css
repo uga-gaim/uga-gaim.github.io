@@ -322,10 +322,24 @@ p {
     height: 100%;
 }
 
-.hero-slide img {
+/* Blurred, zoomed copy of the photo fills the letterbox bars */
+.hero-media img.hero-slide-bg {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    filter: blur(28px) brightness(0.85);
+    transform: scale(1.15); /* hides the soft edges the blur creates */
+    display: block;
+}
+
+/* The actual photo, never cropped */
+.hero-media img.hero-slide-img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
     display: block;
 }
 
@@ -518,6 +532,11 @@ section:not(.hero) {
     width: auto;
     object-fit: contain;
     display: block;
+}
+
+/* Modifier for logos that read too large at the default size */
+.partner-tile.partner-tile-sm img {
+    height: clamp(60px, 10vw, 105px);
 }
 
 @media (max-width: 768px) {
