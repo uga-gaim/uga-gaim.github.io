@@ -437,13 +437,20 @@ p {
     color: var(--text-primary);
 }
 
-/* A real section heading — sits a step below the hero h1, not a small label */
-.research-label {
+/* Section headings — a step below the hero h1, not small uppercase labels */
+.research-label,
+.partners-label {
     display: block;
-    margin-top: 3rem;
     font-size: var(--fs-xl);
     font-weight: 400;
     color: var(--text-primary);
+}
+
+/* Explicit because the hero copy is now taller than the photo, so the centered
+   grid no longer leaves slack under the buttons. The partners labels don't need
+   this — .partners-block is a flex column with its own gap. */
+.research-label {
+    margin-top: 4rem;
 }
 
 .research-row {
@@ -451,11 +458,6 @@ p {
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     margin-top: 3rem;
-}
-
-/* The label already provides the gap from the hero above */
-.research-label + .research-row {
-    margin-top: 0.9rem;
 }
 
 .research-card {
@@ -550,13 +552,6 @@ section:not(.hero) {
     border-left: 1px solid var(--border-color);
 }
 
-.partners-label {
-    font-size: var(--fs-xs);
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-}
 
 .partners-logos {
     display: flex;
