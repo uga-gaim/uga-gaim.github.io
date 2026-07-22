@@ -575,9 +575,6 @@ section:not(.hero) {
     justify-content: center;
 }
 
-/* Logos are bounded by a landscape box, not a square: the width cap is ~1.4x the
-   height cap, so a logo up to 1.4:1 still renders at full height. Only wider
-   marks get held back by width — which is what keeps them from dominating. */
 .partner-tile img {
     max-height: clamp(80px, 14vw, 120px);
     max-width: clamp(150px, 31vw, 170px);
@@ -587,10 +584,9 @@ section:not(.hero) {
     display: block;
 }
 
-/* Modifier for logos that still read too large at the default bounds */
 .partner-tile.partner-tile-sm img {
-    max-height: clamp(60px, 10vw, 84px);
-    max-width: clamp(105px, 22vw, 119px);
+    max-height: clamp(40px, 9vw, 70px);
+    max-width: clamp(110px, 30vw, 215px);
 }
 
 @media (max-width: 768px) {
