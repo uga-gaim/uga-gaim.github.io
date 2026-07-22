@@ -52,27 +52,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const hamburger = document.querySelector('.nav-hamburger');
         const mobileMenu = document.querySelector('.nav-mobile-menu');
         if (hamburger && mobileMenu) {
-            const mobileLabels = [
-                'Extreme Weather Event Forecasting',
-                'AI for Energy Market',
-                'Accessibility to Arctic'
-            ];
-            const cards = document.querySelectorAll('.hero-research-content p');
-            const originalLabels = Array.from(cards).map(el => el.textContent);
-            const heroIntro = document.querySelector('.hero-content p');
-
-            function syncText() {
-                const isMobile = window.innerWidth <= 768;
-                cards.forEach((el, i) => {
-                    el.textContent = isMobile ? mobileLabels[i] : originalLabels[i];
-                });
-                if (heroIntro) heroIntro.style.display = isMobile ? 'none' : '';
-                if (!isMobile) mobileMenu.classList.remove('open');
-            }
-
             hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-            window.addEventListener('resize', syncText);
-            syncText();
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) mobileMenu.classList.remove('open');
+            });
         }
     }
 
@@ -94,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         news: 'https://docs.google.com/spreadsheets/d/1dXi4Xsls_baLten9Shn2kwF-SZ7QOpb6/gviz/tq?tqx=out:csv',
         publications: 'https://docs.google.com/spreadsheets/d/1C3FFrE_CRWiliexxafu7ci_78_XDcN_z/gviz/tq?tqx=out:csv',
         people: 'https://docs.google.com/spreadsheets/d/1VODQFrsWPv_qFuYQryK44ix0a-89mtBe/gviz/tq?tqx=out:csv',
-        hero: 'https://docs.google.com/spreadsheets/d/1RJLU8RN-3P1sEOwwJVeJ-u-RRlJe3rzZAMDMccN_3HA/gviz/tq?tqx=out:csv'
+        hero: 'https://docs.google.com/spreadsheets/d/1nH3YDu0MfmaBATuiQdBVOZGSbgOmPM9c57kSFn8Pj9U/gviz/tq?tqx=out:csv'
     };
 
     function parseCSV(text) {
@@ -155,7 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return /^https?:\/\//i.test(trimmed) ? escapeHtml(trimmed) : '';
     }
 
-    const HERO_SLIDE_MS = 4000;
+    const HERO_SLIDE_MS = 9000;
 
     const heroMedia = document.getElementById('hero-media');
     if (heroMedia) {
@@ -209,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const go = (dir) => {
-            if (animating) return;
+            if (animating || document.hidden) return;
             animating = true;
             pos += dir;
             setTransform();
@@ -229,6 +212,28 @@ document.addEventListener('DOMContentLoaded', () => {
             timer = setInterval(() => go(1), HERO_SLIDE_MS);
         };
         autoplay();
+
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) autoplay();
+        });
+
+        const arrow = (dir, label, points) => `
+            <button class="hero-nav hero-nav-${dir}" type="button" aria-label="${label}">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="${points}"></polyline>
+                </svg>
+            </button>`;
+        container.insertAdjacentHTML('beforeend',
+            arrow('prev', 'Previous slide', '15 18 9 12 15 6') +
+            arrow('next', 'Next slide', '9 18 15 12 9 6'));
+
+        container.querySelectorAll('.hero-nav').forEach(btn => {
+            btn.addEventListener('click', () => {
+                go(btn.classList.contains('hero-nav-next') ? 1 : -1);
+                autoplay();
+            });
+        });
     }
 
     const newsList = document.getElementById('news-list');
