@@ -437,11 +437,25 @@ p {
     color: var(--text-primary);
 }
 
+/* A real section heading — sits a step below the hero h1, not a small label */
+.research-label {
+    display: block;
+    margin-top: 3rem;
+    font-size: var(--fs-xl);
+    font-weight: 400;
+    color: var(--text-primary);
+}
+
 .research-row {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 0.75rem;
     margin-top: 3rem;
+}
+
+/* The label already provides the gap from the hero above */
+.research-label + .research-row {
+    margin-top: 0.9rem;
 }
 
 .research-card {
