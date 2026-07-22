@@ -324,7 +324,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const PERSON_PHOTOS = {
-        'Anna Long': 'assets/people/Long.jpg',
         'Harshith Kethavath': 'assets/people/Kethavath.jpeg',
     };
 
