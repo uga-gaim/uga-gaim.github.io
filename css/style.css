@@ -327,6 +327,16 @@ p {
     color: var(--text-secondary);
 }
 
+/* Closing thought of the lede — warms to the theme red on hover */
+.hero-lede-em {
+    font-style: italic;
+    transition: color 0.2s ease;
+}
+
+.hero-lede-em:hover {
+    color: var(--accent);
+}
+
 .hero-actions {
     display: flex;
     flex-wrap: wrap;
