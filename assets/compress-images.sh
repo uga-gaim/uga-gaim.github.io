@@ -11,8 +11,17 @@ compress_file() {
     local f="$1"
     case "${f:l}" in
         *.png|*.jpg|*.jpeg|*.webp)
-            sips -Z 1200 "$f" --out "$f" > /dev/null 2>&1
-            echo "Compressed: $f"
+            local before=$(stat -f%z "$f")
+            if sips -Z 1200 "$f" --out "$f" >/dev/null 2>&1; then
+                local after=$(stat -f%z "$f")
+                if [ "$before" -eq "$after" ]; then
+                    echo "Unchanged (already ≤1200px): $f"
+                else
+                    echo "Compressed: $f  ($before → $after bytes)"
+                fi
+            else
+                echo "FAILED: $f" >&2
+            fi
             ;;
         *)
             echo "Skipped (unsupported type): $f"
