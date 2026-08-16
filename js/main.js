@@ -337,6 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const PERSON_PHOTOS = {
         'Harshith Kethavath': 'assets/people/Kethavath.jpeg',
+        'Emmanuel Mensah': 'assets/people/Mensah.jpeg',
     };
 
     function personPhotoHtml(person, name, initials) {
