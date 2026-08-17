@@ -339,6 +339,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Harshith Kethavath': 'assets/people/Kethavath.jpeg',
         'Emmanuel Mensah': 'assets/people/Mensah.jpeg',
         'Anna Long': 'assets/people/Long.jpg',
+        'Yong-Hun Suh': 'assets/people/Suh.jpeg',
     };
 
     function personPhotoHtml(person, name, initials) {
