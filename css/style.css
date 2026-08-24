@@ -1251,3 +1251,47 @@ a.past-member-name:hover {
         gap: 3rem;
     }
 }
+
+/* Scheduling page (/meet/) — unlisted, reached only by a direct link. */
+.meet-copy {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.meet-copy a {
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.meet-email {
+    font-style: italic;
+    transition: color 0.2s ease;
+}
+
+.meet-email:hover {
+    color: var(--accent);
+}
+
+/* The Cal.com inline embed sizes its own iframe height as the booker renders,
+   so give it a floor to occupy while it loads. Week view needs more room than
+   month view: seven day-columns over a scrolling time grid. */
+.meet-embed {
+    min-height: 850px;
+    margin-top: 3rem;
+    overflow: auto;
+
+    /* Break out of the 1200px content column to 90% of the viewport — the week
+       grid earns the extra width. calc(50% - 45vw) re-centers the wider box
+       against the column it is nested in. */
+    width: 90vw;
+    max-width: 90vw;
+    margin-left: calc(50% - 45vw);
+    margin-right: calc(50% - 45vw);
+}
+
+.meet-noscript {
+    margin-top: 3rem;
+}
