@@ -1192,6 +1192,17 @@ a.past-member-name:hover {
     display: block;
 }
 
+/* Fit canvas: each slot takes its image's own aspect ratio (set --w/--h inline)
+   and grows in proportion to it, so the row shares one height and nothing is cropped */
+.gallery-canvas-fit > .gallery-slot {
+    aspect-ratio: var(--w) / var(--h);
+    flex: calc(var(--w) / var(--h)) 1 0;
+}
+
+.gallery-canvas-fit .gallery-slot img {
+    object-fit: contain;
+}
+
 @media (max-width: 768px) {
     .gallery-canvas {
         flex-direction: column;
@@ -1213,6 +1224,11 @@ a.past-member-name:hover {
 
     .gallery-canvas > .gallery-slot:last-child {
         border-radius: 0 0 calc(var(--border-radius-xl) - 3px) calc(var(--border-radius-xl) - 3px);
+    }
+
+    .gallery-canvas-fit > .gallery-slot {
+        flex: none;
+        width: 100%;
     }
 }
 
