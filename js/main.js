@@ -340,6 +340,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'Emmanuel Mensah': 'assets/people/Mensah.jpeg',
         'Anna Long': 'assets/people/Long.jpg',
         'Yong-Hun Suh': 'assets/people/Suh.jpeg',
+        'Martina Calovi': 'assets/people/Calovi.jpg',
+        'Stylianos Hadjipetrou': 'assets/people/Hadjipetrou.png',
     };
 
     function personPhotoHtml(person, name, initials) {
@@ -352,6 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const currentGrid = document.getElementById('current-members');
+    const affiliatedGrid = document.getElementById('affiliated-members');
     const pastGrid = document.getElementById('past-members');
     if (currentGrid || pastGrid) {
         if (currentGrid) currentGrid.innerHTML = '<p class="loading-text">Loading team…</p>';
@@ -435,6 +438,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderPeople(people) {
         const byStatus = status => people.filter(p => (p.Status || '').trim().toLowerCase() === status);
         const current = byStatus('current');
+        const affiliated = byStatus('affiliated');
         const past = byStatus('past');
 
         if (currentGrid) {
@@ -442,6 +446,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? current.map(personCard).join('')
                 : '<p class="loading-text">No current members listed.</p>';
             attachPhotoFallback(currentGrid);
+        }
+
+        const affiliatedDivider = document.getElementById('affiliated-divider');
+        if (affiliatedGrid) {
+            affiliatedGrid.innerHTML = affiliated.map(personCard).join('');
+            attachPhotoFallback(affiliatedGrid);
+        }
+        if (affiliatedDivider) {
+            affiliatedDivider.style.display = affiliated.length ? '' : 'none';
         }
 
         const pastDivider = document.getElementById('past-divider');
